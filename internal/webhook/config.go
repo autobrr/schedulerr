@@ -6,7 +6,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type DaySchedule [24]HourBlock
+type DaySchedule []HourBlock
 
 type Config struct {
 	Sunday    DaySchedule `yaml:"sunday"`
@@ -30,13 +30,13 @@ func LoadConfig(filename string) (*WeeklyScheduler, error) {
 	}
 
 	ws := NewWeeklyScheduler()
-	ws.Sunday = config.Sunday
-	ws.Monday = config.Monday
-	ws.Tuesday = config.Tuesday
-	ws.Wednesday = config.Wednesday
-	ws.Thursday = config.Thursday
-	ws.Friday = config.Friday
-	ws.Saturday = config.Saturday
+	ws.Sunday = config.Sunday[:]
+	ws.Monday = config.Monday[:]
+	ws.Tuesday = config.Tuesday[:]
+	ws.Wednesday = config.Wednesday[:]
+	ws.Thursday = config.Thursday[:]
+	ws.Friday = config.Friday[:]
+	ws.Saturday = config.Saturday[:]
 
 	return ws, nil
 }
