@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"net/http"
 	"os"
 
@@ -13,7 +14,18 @@ func main() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
+	configPath := flag.String("config", "", "Path to config YAML file")
+	flag.Parse()
+
 	scheduler := webhook.NewWeeklyScheduler()
+
+	if *configPath != "" {
+		config, err := webhook.LoadConfigFromYAML(*configPath)
+		if err != nil {
+			log.Fatal().Err(err).Msg("Failed to load YAML configuration")
+		}
+		scheduler.AssignSchedule(config)
+	}
 
 	http.HandleFunc("/webhook", scheduler.WebhookHandler)
 
