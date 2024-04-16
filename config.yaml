@@ -1,25 +1,19 @@
 sunday:
   - hour: 0
     enabled: false
-  - hour: 1
-    enabled: true
   - hour: 23
     enabled: false
 monday:
-  - hour: 0
-    enabled: true
   - hour: 23
     enabled: false
 tuesday:
   - hour: 0
     enabled: false
-  - hour: 23
-    enabled: true
 wednesday:
   - hour: 0
-    enabled: true
+    enabled: false
   - hour: 23
-    enabled: true
+    enabled: false
 thursday:
   - hour: 0
     enabled: false
@@ -27,9 +21,9 @@ thursday:
     enabled: false
 friday:
   - hour: 0
-    enabled: true
+    enabled: false
   - hour: 23
-    enabled: true
+    enabled: false
 saturday:
   - hour: 0
     enabled: false

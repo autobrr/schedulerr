@@ -59,7 +59,6 @@ func (ws *WeeklyScheduler) WebhookHandler(w http.ResponseWriter, r *http.Request
 	var currentSchedule map[string][]HourBlock
 	var err error
 
-	// check if the request has a body
 	if r.ContentLength > 0 {
 		err = json.NewDecoder(r.Body).Decode(&currentSchedule)
 		if err != nil {
@@ -83,13 +82,10 @@ func (ws *WeeklyScheduler) WebhookHandler(w http.ResponseWriter, r *http.Request
 	currentHour := currentTime.Hour()
 	dayOfWeek := strings.ToLower(currentTime.Weekday().String())
 
-	// assume the block is enabled by default if not defined
+	// treat blocks as enabled by default
 	blockEnabled := true
 
 	if blocks, found := currentSchedule[dayOfWeek]; found {
-		blockEnabled = false // set to false initially, we'll enable it if we find a matching block
-
-		// iterate over the provided blocks to find a match for the current hour
 		for _, block := range blocks {
 			if block.Hour == currentHour {
 				blockEnabled = block.Enabled
@@ -98,7 +94,6 @@ func (ws *WeeklyScheduler) WebhookHandler(w http.ResponseWriter, r *http.Request
 		}
 	}
 
-	// if the block is enabled, return 200 OK; otherwise, return 403 Forbidden
 	if blockEnabled {
 		w.WriteHeader(http.StatusOK)
 	} else {
