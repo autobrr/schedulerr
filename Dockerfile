@@ -1,5 +1,5 @@
 # build app
-FROM golang:1.21-alpine3.19 AS app-builder
+FROM golang:1.22-alpine3.19 AS app-builder
 
 ARG VERSION=dev
 ARG REVISION=dev
@@ -19,7 +19,7 @@ COPY . ./
 #ENV GOOS=linux
 ENV CGO_ENABLED=0
 
-RUN go build -ldflags "-s -w -X main.version=${VERSION} -X main.commit=${REVISION} -X main.date=${BUILDTIME}" -o bin/schedulerr cmd/schedulerr/main.go
+RUN go build -ldflags "-s -w -X github.com/autobrr/schedulerr/internal/buildinfo.Version=${VERSION} -X github.com/autobrr/schedulerr/internal/buildinfo.Commit=${REVISION} -X github.com/autobrr/schedulerr/internal/buildinfo.Date=${BUILDTIME}" -o bin/schedulerr cmd/schedulerr/main.go
 
 # build runner
 FROM alpine:latest
@@ -38,13 +38,13 @@ COPY --from=app-builder /src/bin/schedulerr /usr/bin/
 
 # make folders
 RUN mkdir "${APP_DIR}" && \
-    # create user
+# create user
     useradd -u 1000 -U -d "${CONFIG_DIR}" -s /bin/false schedulerr && \
     usermod -G users schedulerr
 
 WORKDIR /config
 
-EXPOSE 7441
+EXPOSE 8585
 
-ENTRYPOINT ["schedulerr", "run", "--config", "/config/config.yaml"]
+ENTRYPOINT ["schedulerr", "--config", "/config/config.yaml"]
 #CMD ["--config", "/config"]
