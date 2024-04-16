@@ -9,6 +9,8 @@ monday:
 tuesday:
   - hour: 0
     enabled: false
+  - hour: 18
+    enabled: false
 wednesday:
   - hour: 0
     enabled: false

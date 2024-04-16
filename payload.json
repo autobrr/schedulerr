@@ -1,28 +1,28 @@
 {
     "sunday": [
         { "hour": 0, "enabled": false },
-        { "hour": 1, "enabled": true },
+        { "hour": 1, "enabled": false },
         { "hour": 23, "enabled": false }
     ],
     "monday": [
-        { "hour": 0, "enabled": true },
+        { "hour": 0, "enabled": false },
         { "hour": 23, "enabled": false }
     ],
     "tuesday": [
         { "hour": 0, "enabled": false },
-        { "hour": 23, "enabled": true }
+        { "hour": 23, "enabled": false }
     ],
     "wednesday": [
-        { "hour": 0, "enabled": true },
-        { "hour": 23, "enabled": true }
+        { "hour": 0, "enabled": false },
+        { "hour": 23, "enabled": false }
     ],
     "thursday": [
         { "hour": 0, "enabled": false },
         { "hour": 23, "enabled": false }
     ],
     "friday": [
-        { "hour": 0, "enabled": true },
-        { "hour": 23, "enabled": true }
+        { "hour": 0, "enabled": false },
+        { "hour": 23, "enabled": false }
     ],
     "saturday": [
         { "hour": 0, "enabled": false },
