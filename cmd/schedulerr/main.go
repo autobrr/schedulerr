@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/autobrr/schedulerr/internal/config"
 	"github.com/autobrr/schedulerr/internal/webhook"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -20,13 +22,17 @@ func main() {
 	flag.Parse()
 
 	scheduler := webhook.NewWeeklyScheduler()
+	loadConfig := config.LoadConfigFromYAML
 
 	if *configPath != "" {
-		config, err := webhook.LoadConfigFromYAML(*configPath)
+		config, err := loadConfig(*configPath)
 		if err != nil {
 			log.Fatal().Err(err).Msg("Failed to load YAML configuration")
 		}
 		scheduler.AssignSchedule(config)
+		log.Info().Str("configPath", *configPath).Msg("Loaded configuration file")
+	} else {
+		log.Info().Msg("No configuration file loaded")
 	}
 
 	http.HandleFunc("/webhook", scheduler.WebhookHandler)
