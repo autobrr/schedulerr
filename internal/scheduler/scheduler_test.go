@@ -1,4 +1,4 @@
-package webhook
+package scheduler
 
 import (
 	"testing"
