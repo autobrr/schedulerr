@@ -24,7 +24,7 @@ thursday:
 friday:
   - hour: 0
     enabled: false
-  - hour: 23
+  - hour: 21
     enabled: false
 saturday:
   - hour: 0

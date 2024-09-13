@@ -3,7 +3,7 @@ package config
 import (
 	"os"
 
-	"github.com/autobrr/schedulerr/internal/scheduler"
+	"github.com/autobrr/schedulerr/scheduler"
 
 	"gopkg.in/yaml.v3"
 )
