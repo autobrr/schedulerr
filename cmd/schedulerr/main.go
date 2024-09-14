@@ -5,10 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/autobrr/schedulerr/internal/config"
-	"github.com/autobrr/schedulerr/internal/scheduler"
-	"github.com/autobrr/schedulerr/internal/webhook"
-
+	"github.com/autobrr/schedulerr/scheduler"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -22,28 +19,22 @@ func main() {
 	configPath := flag.String("config", "", "Path to config YAML file")
 	flag.Parse()
 
-	scheduler := scheduler.NewWeeklyScheduler()
-	loadConfig := config.LoadConfigFromYAML
+	sched := scheduler.NewWeeklyScheduler()
 
 	if *configPath != "" {
-		config, err := loadConfig(*configPath)
-		if err != nil {
+		if err := sched.LoadConfigFromYAML(*configPath); err != nil {
 			log.Fatal().Err(err).Msg("Failed to load YAML configuration")
 		}
-		scheduler.AssignSchedule(config)
 		log.Info().Str("configPath", *configPath).Msg("Loaded configuration file")
 	} else {
 		log.Info().Msg("No configuration file loaded")
 	}
 
-	http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
-		webhook.WebhookHandler(scheduler, w, r)
-	})
+	http.HandleFunc("/webhook", sched.WebhookHandler)
 
 	log.Info().Str("service", "schedulerr").Msg("Service has started on :8585")
 
-	err := http.ListenAndServe(":8585", nil)
-	if err != nil {
+	if err := http.ListenAndServe(":8585", nil); err != nil {
 		log.Fatal().Err(err).Msg("Failed to start the server")
 	}
 }

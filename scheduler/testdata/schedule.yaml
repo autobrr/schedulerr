@@ -1,0 +1,11 @@
+monday:
+  - hour: 9
+    enabled: true
+  - hour: 10
+    enabled: false
+tuesday:
+  - hour: 14
+    enabled: true
+friday:
+  - hour: 21
+    enabled: false
