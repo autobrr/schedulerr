@@ -1,10 +1,12 @@
 sunday:
-  - hour: 0
+  - hour: 9
     enabled: false
   - hour: 23
     enabled: false
 monday:
   - hour: 23
+    enabled: false
+  - hour: 9
     enabled: false
 tuesday:
   - hour: 0
