@@ -46,4 +46,5 @@ WORKDIR /config
 
 EXPOSE 8585
 
-ENTRYPOINT ["schedulerr", "serve"]
+ENTRYPOINT ["schedulerr", "--config", "/config/config.yaml"]
+CMD ["serve"]
