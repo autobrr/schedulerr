@@ -17,9 +17,15 @@ Example setup:
 ```yaml
 services:
   schedulerr:
+    container_name: schedulerr
     image: ghcr.io/autobrr/schedulerr:latest
+    environment:
+      - TZ=UTC
+    ports:
+      - "8585:8585"
+    user: 1000:1000
     volumes:
-      - "/path/to/docker/data/schedulerr:/config"
+      - "./:/config"
 ```
 
 Place your `config.yaml` in the schedulerr directory. See example config [here.](config.yaml)
